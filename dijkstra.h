@@ -31,7 +31,13 @@
 template <typename T>
 T dijkstra(const std::vector<std::vector<T>>& adjacency_matrix, int n, int node) {
     // If the graph is directional, both adjacency list and adjacency matrix are fine. But if the graph is non-directional, we need to transfer the adjacency list into an adjacency table;
+    
     assert(("Please input a valid node number!", node < n));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            assert("The cost between two nodes can not be negative!", adjacency_matrix[i][j] >= 0;)
+        }
+    }
     
     std::vector<bool> visited(n, false);
     std::vector<T> distance(n, INT_MAX);

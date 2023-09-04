@@ -91,7 +91,7 @@ T dijkstra(const std::vector<std::vector<T>>& adjacency_matrix, int n, int node)
 //     7----8----7
 
 template <typename T>
-std::vector<std::vector<T>> adjacencyList2Matrix(const std::vector<std::vector<T>>& adjacency_list, int n) {
+std::vector<std::vector<T>> adjacencyList2Matrix(const std::vector<std::vector<T>>& adjacency_list, int n, bool directional=false) {
     // This function transforms a bi-directional adjacency list into an adjacency matrix
     assert(adjacency_list[0].size() == 3);
     
@@ -99,12 +99,17 @@ std::vector<std::vector<T>> adjacencyList2Matrix(const std::vector<std::vector<T
     for (int i = 0; i < n; i++) {
         adjacency_matrix[i][i] = 0;
     }
-    for (int i = 0; i < adjacency_list.size(); i++) {
-        int from_node = adjacency_list[i][0];
-        int to_node=  adjacency_list[i][1];
-        int distance = adjacency_list[i][2];
-        adjacency_matrix[from_node][to_node] = distance;
-        adjacency_matrix[to_node][from_node] = distance;
+    
+    if (directional) {
+        for (int i = 0; i < adjacency_list.size(); i++) {
+            adjacency_matrix[adjacency_list[i][0]][adjacency_list[i][1]] = adjacency_list[i][2];
+        }
+    } else {
+        for (int i = 0; i < adjacency_list.size(); i++) {
+            adjacency_matrix[adjacency_list[i][0]][adjacency_list[i][1]] = adjacency_list[i][2];
+            adjacency_matrix[adjacency_list[i][1]][adjacency_list[i][0]] = adjacency_list[i][2];
+        }
     }
+    
     return adjacency_matrix;
 }
